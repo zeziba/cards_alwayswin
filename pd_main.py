@@ -22,6 +22,9 @@ are marginal at best ensuring the player does not feel ripped off.
 
 from random import randint
 from collections import Counter
+from resources.images import gen_dice, load_dice
+import tkinter as tk
+from PIL import ImageTk
 
 
 def dice_rules(hand):
@@ -73,12 +76,49 @@ class PokeDiceGame(object):
             self.current_hand.append(die())
 
 
+class Main(tk.Tk):
+
+    def __init__(self, master):
+        super().__init__(master)
+        self.master = master
+
+        self.width = 120 * 6
+        self.height = 140
+        self.buffer_h = 40
+
+        die_gen = gen_dice.Die()
+        self.dice_img = load_dice.Dice()
+        self.dice_img.load()
+
+        button = tk.Button(master, text="Roll", command=self.hand)
+        button.grid(column=0, row=0, sticky=tk.N, columnspan=10)
+
+        self.dice = [tk.Label(self.master, image=None) for i in range(5)]
+        for index, die in enumerate(self.dice):
+            self.dice[index].grid(column=index, row=1)
+
+        self.out = tk.StringVar()
+        self.out.set("Roll")
+        result = tk.Label(self.master, textvariable=self.out)
+        result.grid(row=3, columnspan=10)
+
+        self.title = "House Always Wins"
+        self.geometry("{}x{}".format(self.width, self.height + self.buffer_h))
+        self.config(background='grey')
+
+        self.game = PokeDiceGame()
+        self._hand = []
+
+        self.mainloop()
+
+    def hand(self):
+        self.game.roll_hand()
+        for index, i in enumerate(self.game.current_hand):
+            img = ImageTk.PhotoImage(self.dice_img.get(i))
+            self.dice[index].config(image=img)
+            self.dice[index].image = img
+            self.out.set(dice_rules(self.game.current_hand))
+
+
 if __name__ == '__main__':
-    root = PokeDiceGame()
-    print(dice_rules([1, 2, 3, 4, 5]))
-    print(dice_rules([2, 3, 4, 5, 6]))
-    while True:
-        root.roll_hand()
-        print(root.current_hand)
-        print(dice_rules(root.current_hand))
-        input("Hit enter to continue.")
+    m = Main(None)
