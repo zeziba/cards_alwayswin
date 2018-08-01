@@ -21,3 +21,6 @@ out prizes based on that value. With anything 3(Three of a kind) or lower only g
 good prizes and the rest giving gifts that are magnitudes better than the last.
 This ensures that there is always incentive to roll again but the odds of getting the best prizes
 are marginal at best ensuring the player does not feel ripped off.
+
+TODO:
+    Add additional capabilities to fully flesh out the game.
