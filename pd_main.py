@@ -20,11 +20,13 @@ This ensures that there is always incentive to roll again but the odds of gettin
 are marginal at best ensuring the player does not feel ripped off.
 """
 
-from random import randint
-from collections import Counter
-from resources.images import gen_dice, load_dice
 import tkinter as tk
+from collections import Counter
+from random import randint
+
 from PIL import ImageTk
+
+from resources.images import gen_dice, load_dice
 
 
 def dice_rules(hand):
@@ -58,7 +60,7 @@ def dice_rules(hand):
 class Dice(object):
 
     def __init__(self, sides=6):
-        self.sides = 6
+        self.sides = sides
 
     def __call__(self):
         return randint(1, self.sides)
@@ -67,7 +69,7 @@ class Dice(object):
 class PokeDiceGame(object):
 
     def __init__(self):
-        self.cup_of_dice = [Dice() for i in range(5)]
+        self.cup_of_dice = [Dice() for _ in range(5)]
         self.current_hand = []
 
     def roll_hand(self):
