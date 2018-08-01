@@ -20,13 +20,8 @@ This ensures that there is always incentive to roll again but the odds of gettin
 are marginal at best ensuring the player does not feel ripped off.
 """
 
-import tkinter as tk
 from collections import Counter
 from random import randint
-
-from PIL import ImageTk
-
-from resources.images import gen_dice, load_dice
 
 
 def dice_rules(hand):
@@ -78,49 +73,54 @@ class PokeDiceGame(object):
             self.current_hand.append(die())
 
 
-class Main(tk.Tk):
-
-    def __init__(self, master):
-        super().__init__(master)
-        self.master = master
-
-        self.width = 120 * 6
-        self.height = 140
-        self.buffer_h = 40
-
-        die_gen = gen_dice.Die()
-        self.dice_img = load_dice.Dice()
-        self.dice_img.load()
-
-        button = tk.Button(master, text="Roll", command=self.hand)
-        button.grid(column=0, row=0, sticky=tk.N, columnspan=10)
-
-        self.dice = [tk.Label(self.master, image=None) for i in range(5)]
-        for index, die in enumerate(self.dice):
-            self.dice[index].grid(column=index, row=1)
-
-        self.out = tk.StringVar()
-        self.out.set("Roll")
-        result = tk.Label(self.master, textvariable=self.out)
-        result.grid(row=3, columnspan=10)
-
-        self.title = "House Always Wins"
-        self.geometry("{}x{}".format(self.width, self.height + self.buffer_h))
-        self.config(background='grey')
-
-        self.game = PokeDiceGame()
-        self._hand = []
-
-        self.mainloop()
-
-    def hand(self):
-        self.game.roll_hand()
-        for index, i in enumerate(self.game.current_hand):
-            img = ImageTk.PhotoImage(self.dice_img.get(i))
-            self.dice[index].config(image=img)
-            self.dice[index].image = img
-            self.out.set(dice_rules(self.game.current_hand))
-
-
 if __name__ == '__main__':
+    import tkinter as tk
+    from PIL import ImageTk
+
+    from resources.images import gen_dice, load_dice
+
+
+    class Main(tk.Tk):
+
+        def __init__(self, master):
+            super().__init__(master)
+            self.master = master
+
+            self.width = 120 * 6
+            self.height = 140
+            self.buffer_h = 40
+
+            die_gen = gen_dice.Die()
+            self.dice_img = load_dice.Dice()
+            self.dice_img.load()
+
+            button = tk.Button(master, text="Roll", command=self.hand)
+            button.grid(column=0, row=0, sticky=tk.N, columnspan=10)
+
+            self.dice = [tk.Label(self.master, image=None) for i in range(5)]
+            for index, die in enumerate(self.dice):
+                self.dice[index].grid(column=index, row=1)
+
+            self.out = tk.StringVar()
+            self.out.set("Roll")
+            result = tk.Label(self.master, textvariable=self.out)
+            result.grid(row=3, columnspan=10)
+
+            self.title = "House Always Wins"
+            self.geometry("{}x{}".format(self.width, self.height + self.buffer_h))
+            self.config(background='grey')
+
+            self.game = PokeDiceGame()
+            self._hand = []
+
+            self.mainloop()
+
+        def hand(self):
+            self.game.roll_hand()
+            for index, i in enumerate(self.game.current_hand):
+                img = ImageTk.PhotoImage(self.dice_img.get(i))
+                self.dice[index].config(image=img)
+                self.dice[index].image = img
+                self.out.set(dice_rules(self.game.current_hand))
+
     m = Main(None)
