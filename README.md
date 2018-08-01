@@ -1,4 +1,8 @@
-<p>This is a game to show a algorithm that allows the house to always win.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+
+This is a game to show a algorithm that allows the house to always win.
 
 This module will simulate random chance using poker dice.
 
@@ -16,4 +20,3 @@ out prizes based on that value. With anything 3(Three of a kind) or lower only g
 good prizes and the rest giving gifts that are magnitudes better than the last.
 This ensures that there is always incentive to roll again but the odds of getting the best prizes
 are marginal at best ensuring the player does not feel ripped off.
-</p>
