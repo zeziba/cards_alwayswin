@@ -7,8 +7,6 @@ python:
 
 install:
   - pip install codecov
-  - pip install pillow
-  - pip install tkinter
 
 script:
   - coverage run tests.py
